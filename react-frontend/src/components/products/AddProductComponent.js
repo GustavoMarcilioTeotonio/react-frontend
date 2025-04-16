@@ -1,27 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import ProductService from '../ProductService';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import ProductService from '../../ProductService';
+import { useNavigate } from 'react-router-dom';
 
-const UpdateProductComponent = () => {
-    const { id } = useParams();
+const AddProductComponent = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const navigate = useNavigate();
 
-    useEffect(() => {
-        ProductService.getProductById(id).then((res) => {
-            const product = res.data;
-            setName(product.name);
-            setDescription(product.description);
-            setPrice(product.price);
-        });
-    }, [id]);
-
-    const updateProduct = (e) => {
+    const saveProduct = (e) => {
         e.preventDefault();
         const product = { name, description, price };
-        ProductService.updateProduct(product, id).then(() => {
+        ProductService.createProduct(product).then(() => {
             navigate('/products');
         });
     };
@@ -31,7 +21,7 @@ const UpdateProductComponent = () => {
             <div className="container">
                 <div className="row">
                     <div className="card col-md-6 offset-md-3 offset-md-3">
-                        <h3 className="text-center">Update Product</h3>
+                        <h3 className="text-center">Add Product</h3>
                         <div className="card-body">
                             <form>
                                 <div className="form-group">
@@ -49,7 +39,7 @@ const UpdateProductComponent = () => {
                                     <input placeholder="Price" name="price" className="form-control"
                                         value={price} onChange={(e) => setPrice(e.target.value)} />
                                 </div>
-                                <button className="btn btn-success" onClick={updateProduct}>Save</button>
+                                <button className="btn btn-success" onClick={saveProduct}>Save</button>
                             </form>
                         </div>
                     </div>
@@ -59,4 +49,4 @@ const UpdateProductComponent = () => {
     );
 };
 
-export default UpdateProductComponent;
+export default AddProductComponent;

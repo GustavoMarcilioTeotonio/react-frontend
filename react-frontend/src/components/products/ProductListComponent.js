@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ProductService from '../ProductService';
+import ProductService from '../../ProductService';
 import { Link } from 'react-router-dom';
 
 const ProductListComponent = () => {
